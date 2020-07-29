@@ -105,7 +105,7 @@ INSERT INTO public.tech VALUES (1, 'webpack', 'https://webpack.js.org', false);
 INSERT INTO public.tech VALUES (2, 'mongodb', 'https://docs.mongodb.com', false);
 INSERT INTO public.tech VALUES (3, 'express', 'https://expressjs.com', false);
 INSERT INTO public.tech VALUES (4, 'react', 'https://reactjs.com', false);
-INSERT INTO public.tech VALUES (4, 'postgres', 'https://www.postgresql.org', false);
+INSERT INTO public.tech VALUES (5, 'postgres', 'https://www.postgresql.org', false);
 
 INSERT INTO public.todo (1, 'webpack', 'Install Webpack', false, 'While in the working directory of your project, run npm install webpack in the terminal.')
 INSERT INTO public.todo (2, 'webpack', 'Initialize webpack.config', false, 'Create a new file in the root directory of your project, and name it "webpack.config.js.')
@@ -115,3 +115,14 @@ INSERT INTO public.todo (5, 'webpack', 'Add loaders', false, 'Out of the box, we
 INSERT INTO public.todo (6, 'webpack', 'Add plugins', false, 'In order to use a plugin, you need to require() it by calling it with the new operator.')
 INSERT INTO public.todo (7, 'webpack', 'Specify webpack mode', false, 'By setting the mode parameter to either development, production or none, you can enable webpacks built-in optimizations that correspond to each environment. The default value is production.')
 INSERT INTO public.todo (8, 'mongodb', 'Setup MongoDB', false, 'Setup Mongo database through installation of either a local shell or a cloud database.')
+
+
+select setval('public.board__id_seq', 3, false);
+select setval('public.techInStack__id_seq', 11, false);
+select setval('public.stack__id_seq', 3, false);
+select setval('public.user__id_seq', 3, false);
+select setval('public.tech__id_seq', 6, false);
+select setval('public.todo__id_seq', 9, false);
+
+
+psql -d 'postgres://xwfwupup:I5FD-KWNhHKJfg6QSGBscjbLnIeaCM3C@ruby.db.elephantsql.com:5432/xwfwupup' -f 'postgres_create.sql'
