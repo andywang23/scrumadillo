@@ -4,21 +4,21 @@
   "description": "Life changing app development boilerplate",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production nodemon server/server.js",
+    "start": "cross-env NODE_ENV=production node server/server.js",
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "cross-env NODE_ENV=development concurrently \" webpack-dev-server --open --hot \" \"nodemon ./server/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Pink-Armadillo/scrumadillo.git"
+    "url": "git+https://github.com/Cat-Snek/scrumadillo.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Pink-Armadillo/scrumadillo/issues"
+    "url": "https://github.com/Cat-Snek/scrumadillo/issues"
   },
-  "homepage": "https://github.com/Pink-Armadillo/scrumadillo#readme",
+  "homepage": "https://github.com/Cat-Snek/scrumadillo#readme",
   "devDependencies": {
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
