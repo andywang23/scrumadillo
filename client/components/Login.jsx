@@ -2,7 +2,7 @@ import React from 'react';
 
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import logo from '../assets/icon.png';
 
 class Login extends React.Component {
   // check username and password with database
@@ -34,7 +34,7 @@ class Login extends React.Component {
             borderColor: '#D9DCE0',
           }}
         >
-          <img src="../assets/icon.png" style={{ width: '300px', marginBottom: '15px' }}></img>
+          <img src={logo} style={{ width: '300px', marginBottom: '15px' }}></img>
           <br></br>
           <input
             id="input-username"
