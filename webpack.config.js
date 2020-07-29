@@ -19,7 +19,7 @@ module.exports = {
     hot: true,
     watchContentBase: true,
     // match the output 'publicPath'
-    publicPath: 'http://localhost:8080/dist/',
+    publicPath: '/dist/',
     // fallback to root for other urls
     historyApiFallback: true,
     inline: true,
