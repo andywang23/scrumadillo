@@ -1,12 +1,15 @@
 import React from 'react';
 
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-
+import { Link, Redirect } from 'react-router-dom';
 
 class Login extends React.Component {
   // check username and password with database
   render() {
+    const { toggleLogin, showsignup, loggedIn } = this.props;
+
+    if (loggedIn) return <Redirect to="/" />;
+
     return (
       <div
         style={{
@@ -34,7 +37,10 @@ class Login extends React.Component {
             borderColor: '#D9DCE0',
           }}
         >
-          <img src="../assets/icon.png" style={{ width: '300px', marginBottom: '15px' }}></img>
+          <img
+            src="../assets/icon.png"
+            style={{ width: '300px', marginBottom: '15px' }}
+          ></img>
           <br></br>
           <input
             id="input-username"
@@ -71,7 +77,7 @@ class Login extends React.Component {
           <button
             onClick={(event) => {
               event.preventDefault();
-              this.props.login(
+              toggleLogin(
                 document.getElementById('input-username').value,
                 document.getElementById('input-password').value
               );
@@ -92,8 +98,6 @@ class Login extends React.Component {
           </button>
 
           <Link to="/signup">
-
-         
             <button
               style={{
                 width: '120px',
@@ -106,14 +110,12 @@ class Login extends React.Component {
                 fontWeight: 'bold',
                 borderRadius: '4px',
               }}
-
               onClick={this.showsignup}
             >
               Sign Up
             </button>
           </Link>
 
-           
           <br></br>
           {/* Tried to use a functional get request to Github OAuth but realized we should've just used cookies
           <button onClick={ (e) => {e.preventDefault(); console.log('for github'); this.props.github()}}>

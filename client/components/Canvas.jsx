@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux';
 import { getLogin } from '../reducers/loginSlice';
 import { assignUser, newState } from '../reducers/cardSlice';
 import { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -26,19 +28,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Canvas = (props) => {
-  const dispatch = useDispatch();
+  const { logout, loggedIn, username } = props;
 
-  dispatch(
-    getLogin({
-      username: props.username,
-      userId: props.userId,
-    })
-  );
-  dispatch(
-    assignUser({
-      username: props.username,
-    })
-  );
+  if (!loggedIn) return <Redirect to="/login" />;
+  // console.log('props in Canvas -> ', props);
+  // dispatch(
+  //   getLogin({
+  //     username: props.username,
+  //     userId: props.userId,
+  //   })
+  // );
+  // dispatch(
+  //   assignUser({
+  //     username: props.username,
+  //   })
+  // );
 
   useEffect(() => {
     fetch(`/server/boardState/${props.username}`)
@@ -60,7 +64,7 @@ const Canvas = (props) => {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <NavBar logout={props.logout} />
+          <NavBar logout={logout} />
         </Grid>
         <Grid item xs={6} sm={3}>
           <Paper className={classes.paper}>

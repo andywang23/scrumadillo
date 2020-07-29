@@ -38,9 +38,12 @@ const Card = (props) => {
     for (let i = 0; i < todo.length; i += 1) {
       todoArray.push(
         <div>
-
-          <Task name={todo[i].taskName} detail={todo[i].details} complete={todo[i].completed} id={`id${i}`} />
-
+          <Task
+            name={todo[i].taskName}
+            detail={todo[i].details}
+            complete={todo[i].completed}
+            id={`id${i}`}
+          />
         </div>
       );
     }

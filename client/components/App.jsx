@@ -21,18 +21,18 @@ class App extends Component {
       loggedIn: false,
       // showSignUp: false,
     };
-    this.loginFunction = this.loginFunction.bind(this);
-    this.logOut = this.logOut.bind(this);
+    this.toggleLogin = this.toggleLogin.bind(this);
+    this.toggleLogout = this.toggleLogout.bind(this);
     this.signupFunction = this.signupFunction.bind(this);
     // this.showSignUpFunction = this.showSignUpFunction.bind(this);
     // this.github = this.github.bind(this);
   }
 
-  logOut() {
+  toggleLogout() {
     this.setState({ loggedIn: false });
   }
 
-  loginFunction(username, password) {
+  toggleLogin(username, password) {
     axios
       .post('/server/login', { username, password })
       // assign user to state
@@ -103,19 +103,16 @@ class App extends Component {
   // }
 
   render() {
-    let main;
-    // Shows <Canvas /> when logged in
-    if (this.state.loggedIn === true) {
-      main = <Canvas logout={this.logOut} />;
-      // Shows <Login /> when not logged in
-    } else if (this.state.loggedIn === false) {
-      main = (
-        <Login
-          login={this.loginFunction}
-          showsignup={this.showSignUpFunction}
-        />
-      );
-    }
+    // let main;
+    // // Shows <Canvas /> when logged in
+    // if (this.state.loggedIn) {
+    //   main = <Canvas logout={this.toggleLogout} />;
+    //   // Shows <Login /> when not logged in
+    // } else {
+    //   main = (
+    //     <Login login={this.toggleLogin} showsignup={this.showSignUpFunction} />
+    //   );
+    // }
 
     return (
       <div className="App">
@@ -123,9 +120,34 @@ class App extends Component {
           <Switch>
             <Route
               path="/signup"
-              render={() => <Signup signup={this.signupFunction} />}
+              render={() => (
+                <Signup
+                  signup={this.signupFunction}
+                  loggedIn={this.state.loggedIn}
+                />
+              )}
             />
-            <Route exact path="/" render={() => main} />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <Canvas
+                  logout={this.toggleLogout}
+                  loggedIn={this.state.loggedIn}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/login"
+              render={() => (
+                <Login
+                  toggleLogin={this.toggleLogin}
+                  showsignup={this.showSignUpFunction}
+                  loggedIn={this.state.loggedIn}
+                />
+              )}
+            />
           </Switch>
         </Router>
       </div>
