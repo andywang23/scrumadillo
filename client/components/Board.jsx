@@ -23,11 +23,10 @@ const Board = (props) => {
   const classes = useStyles();
   const cardsArr = [];
 
-  if (id === 'stack') {
-    for (let i = current + 1; i < boardState.cards.length; i++) {
-      cardsArr.push(<Card key={i} name={boardState.cards[i].name} />, <br />);
-    }
-  }
+  if (id === 'stack')
+    boardState.cards.forEach((card, idx) =>
+      cardsArr.push(<Card key={idx} name={card.name} />, <br />)
+    );
 
   if (id === 'inProgress' && boardState.cards[current]) {
     cardsArr.push(
