@@ -8,26 +8,22 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const themes = createMuiTheme({
   palette: {
     primary: {
-      light: '#E3E1E2',
-      main: '#3f50b5',
-      dark: '#DED7DE',
+      main: '#fafafa',
       contrastText: '#fff',
     },
-    secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
-    },
+    // secondary: {
+    //   light: '#ff7961',
+    //   main: '#f44336',
+    //   dark: '#ba000d',
+    //   contrastText: '#000',
+    // },
   },
 });
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
   detail: {
-    backgroundColor: themes.palette.primary.light,
+    backgroundColor: themes.palette.primary.main,
     paddingLeft: theme.spacing(4),
+    marginBottom: theme.spacing(0),
   },
 }));
 
@@ -35,12 +31,12 @@ const Task = (props) => {
   const classes = useStyles();
 
   return (
-    <List dense className={classes.root}>
+    <List>
       <ListItem className={classes.name}>
         <ListItemSecondaryAction>
           <Checkbox
             defaultUnchecked
-            color="secondary"
+            // color="secondary"
             inputProps={{ 'aria-label': 'checkbox with default color' }}
             onClick={() => {
 

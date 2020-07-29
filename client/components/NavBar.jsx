@@ -11,17 +11,11 @@ import { getCards } from '../reducers/deckSlice';
 import { getAll } from '../reducers/boardslice';
 
 const useStyles = makeStyles(() => ({
-  root: {
-    flexGrow: 1,
-  },
   button: {
     marginLeft: 'auto',
   },
   button2: {
     marginRight: 'auto',
-  },
-  title: {
-    flexGrow: 1,
   },
 }));
 

@@ -12,9 +12,6 @@ import { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'left',
@@ -49,7 +46,7 @@ const Canvas = (props) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+  <div>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <NavBar logout={logout} />
