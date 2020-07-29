@@ -3,7 +3,7 @@ import {
   getDefaultMiddleware,
   combineReducers,
 } from '@reduxjs/toolkit';
-import cardReducer from '../reducers/cardSlice';
+import boardReducer from '../reducers/boardSlice';
 import deckReducer from '../reducers/deckSlice';
 import loginReducer from '../reducers/loginSlice';
 
@@ -43,7 +43,7 @@ const updateBoardServer = (store) => (next) => (action) => {
 
 const store = configureStore({
   reducer: combineReducers({
-    card: cardReducer,
+    boardState: boardReducer,
     deck: deckReducer,
     login: loginReducer,
   }),
