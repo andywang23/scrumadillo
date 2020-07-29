@@ -17,22 +17,19 @@ class App extends Component {
     this.state = {
       username: null,
       userId: null,
-      // hacky state values to conditionally render different components on '/' route
       loggedIn: false,
-      // showSignUp: false,
     };
-    this.loginFunction = this.loginFunction.bind(this);
-    this.logOut = this.logOut.bind(this);
-    this.signupFunction = this.signupFunction.bind(this);
-    // this.showSignUpFunction = this.showSignUpFunction.bind(this);
+    this.toggleLogin = this.toggleLogin.bind(this);
+    this.toggleLogout = this.toggleLogout.bind(this);
+    this.registerUser = this.registerUser.bind(this);
     // this.github = this.github.bind(this);
   }
 
-  logOut() {
+  toggleLogout() {
     this.setState({ loggedIn: false });
   }
 
-  loginFunction(username, password) {
+  toggleLogin(username, password) {
     axios
       .post('/server/login', { username, password })
       // assign user to state
@@ -47,7 +44,7 @@ class App extends Component {
       .catch((error) => console.log(error));
   }
 
-  signupFunction(username, password, confirm) {
+  registerUser(username, password, confirm) {
     if (password === confirm) {
       console.log('signup function');
       axios
@@ -62,13 +59,9 @@ class App extends Component {
               username: user.username,
               userId: user._id,
             });
-          } else {
-            console.log('unsuccess');
-          }
+          } else console.log('unsuccess');
         });
-    } else {
-      console.log('passwords not matched');
-    }
+    } else console.log('passwords not matched');
   }
 
   /* Didn't complete the Github authentication process.
@@ -92,10 +85,6 @@ class App extends Component {
   //   }
   // }
 
-  // showSignUpFunction() {
-  //   this.setState({ showSignUp: true });
-  // }
-
   // componentDidMount() {
   //   fetch('/server/cards')
   //     .then((data) => data.json())
@@ -103,29 +92,40 @@ class App extends Component {
   // }
 
   render() {
-    let main;
-    // Shows <Canvas /> when logged in
-    if (this.state.loggedIn === true) {
-      main = <Canvas logout={this.logOut} />;
-      // Shows <Login /> when not logged in
-    } else if (this.state.loggedIn === false) {
-      main = (
-        <Login
-          login={this.loginFunction}
-          showsignup={this.showSignUpFunction}
-        />
-      );
-    }
-
     return (
       <div className="App">
         <Router>
           <Switch>
             <Route
               path="/signup"
-              render={() => <Signup signup={this.signupFunction} />}
+              render={() => (
+                <Signup
+                  registerUser={this.registerUser}
+                  loggedIn={this.state.loggedIn}
+                />
+              )}
             />
-            <Route exact path="/" render={() => main} />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <Canvas
+                  logout={this.toggleLogout}
+                  loggedIn={this.state.loggedIn}
+                  username={this.state.username}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/login"
+              render={() => (
+                <Login
+                  toggleLogin={this.toggleLogin}
+                  loggedIn={this.state.loggedIn}
+                />
+              )}
+            />
           </Switch>
         </Router>
       </div>
