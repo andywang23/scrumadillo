@@ -9,17 +9,25 @@ export const boardSlice = createSlice({
     current: 0, //index of current card
     username: '',
     cards: [], // an array of card objects filled from the deck
+    done: []
   },
   reducers: {
-    increment: (state) => {
-      state.current += 1;
+    complete: (state) => {
+      let keep = state.cards[0]
+      state.cards.shift();
+      state.done.push(keep)
+    },
+    grabTechFromCompletePile : (state) => {
+      let keep = state.done[state.done.length-1]
+      state.done.pop()
+      state.cards.unshift(keep)
     },
     addCard: (state, action) => {
       state.cards.push(action.payload);
     },
-    complete: (state) => {
-      state.completed = true;
-    },
+    // complete: (state) => {
+    //   state.completed = true;
+    // },
     getAll: (state, action) => {
       state.cards = action.payload;
     },
@@ -35,7 +43,7 @@ export const boardSlice = createSlice({
 });
 
 export const {
-  increment,
+  grabTechFromCompletePile,
   addCard,
   getAll,
   complete,

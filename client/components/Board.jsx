@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Card from './Card.jsx';
-import { selectBoard, increment } from '../reducers/boardSlice';
+import { selectBoard, complete, grabTechFromCompletePile } from '../reducers/boardSlice';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -38,15 +38,16 @@ const Board = (props) => {
           url={boardState.cards[current].url}
           card={boardState.cards[current]}
         />
-        <Button onClick={() => dispatch(increment())}>Card Complete</Button>
+        <Button onClick={() => dispatch(complete())}>Card Complete</Button>
       </div>
     );
   }
 
   if (id === 'complete') {
-    for (let i = 0; i < current; i++) {
-      cardsArr.push(<Card key={i} name={boardState.cards[i].name} />, <br />);
+    for (let i = 0; i < boardState.done.length; i++) {
+      cardsArr.push(<Card key={i} name={boardState.done[i].name} />, <br />);
     }
+    cardsArr.push(<Button onClick={() => dispatch(grabTechFromCompletePile())}>Go Back</Button>)
   }
   return (
     <div>
