@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-//the createSlice method encapsulates a piece of the store. 
+//the createSlice method encapsulates a piece of the store.
 // The state and the methods for changing state are accessing throughout the app with useSelector and useDispatch  from 'react-redux'
 
-export const cardSlice = createSlice({
+export const boardSlice = createSlice({
   name: 'Board',
   initialState: {
     current: 0, //index of current card
@@ -34,8 +34,16 @@ export const cardSlice = createSlice({
   },
 });
 
-export const { increment, addCard, getAll, complete, getCards, assignUser, newState } = cardSlice.actions;
+export const {
+  increment,
+  addCard,
+  getAll,
+  complete,
+  getCards,
+  assignUser,
+  newState,
+} = boardSlice.actions;
 
-export const selectCard = (state) => state;
+export const selectBoard = (state) => state;
 
-export default cardSlice.reducer;
+export default boardSlice.reducer;
