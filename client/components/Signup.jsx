@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import logo from '../assets/icon.png';
 
 // familiarize with how add card works without redirect to diff endpoint
 // app, router, axios
@@ -38,7 +39,7 @@ class Signup extends React.Component {
           }}
         >
           <img
-            src="../assets/icon.png"
+            src={logo}
             alt="SCRUMadillo"
             style={{ width: '300px', marginBottom: '15px' }}
           ></img>
