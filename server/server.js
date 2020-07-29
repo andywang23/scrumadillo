@@ -53,10 +53,9 @@ main.use('/cards', cardsRouter);
 /** SERVE STATIC ASSETS IN PRODUCTION MODE ONLY **/
 if (process.env.NODE_ENV === 'production') {
   app.use('/dist', express.static(path.join(__dirname, '../dist')));
-  app.get('/', (res, req) => {
-    req.sendFile(path.resolve(__dirname, '../dist/index.html'));
-  });
-}
+  app.get('/', express.static('client'));
+  };
+
 
 
 

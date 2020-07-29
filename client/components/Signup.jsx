@@ -1,11 +1,16 @@
 import React from 'react';
-const axios = require('axios');
+import { Redirect } from 'react-router-dom';
+import logo from '../assets/icon.png';
 
 // familiarize with how add card works without redirect to diff endpoint
 // app, router, axios
 
 class Signup extends React.Component {
   render() {
+    const { registerUser, loggedIn } = this.props;
+
+    if (loggedIn) return <Redirect to="/" />;
+
     return (
       <div
         style={{
@@ -34,8 +39,7 @@ class Signup extends React.Component {
           }}
         >
           <img
-            // logo url
-            src=""
+            src={logo}
             alt="SCRUMadillo"
             style={{ width: '300px', marginBottom: '15px' }}
           ></img>
@@ -90,7 +94,7 @@ class Signup extends React.Component {
           <button
             onClick={(e) => {
               e.preventDefault();
-              this.props.signup(
+              registerUser(
                 document.getElementById('input-username').value,
                 document.getElementById('input-password').value,
                 document.getElementById('input-confirm-password').value
