@@ -48,6 +48,7 @@
     "express": "^4.17.1",
     "fontsource-roboto": "^2.2.6",
     "mongoose": "^5.9.25",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hot-loader": "^4.12.21",
