@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Card from './Card.jsx';
-import { selectCard, increment } from '../reducers/cardSlice';
+import { selectBoard, increment } from '../reducers/boardSlice';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -13,37 +13,40 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Board = (props) => {
+  const { id } = props;
+
   const dispatch = useDispatch();
-  const { card } = useSelector(selectCard);
-  const current = card.current;
+  console.log('use selector', useSelector(selectBoard));
+  const { boardState } = useSelector(selectBoard);
+  const { current } = boardState;
   console.log('current', current);
   const classes = useStyles();
   const cardsArr = [];
-  if (props.id === 'stack') {
-    for (let i = current + 1; i < card.cards.length; i++) {
-      cardsArr.push(<Card key={i} name={card.cards[i].name} />, <br />);
+
+  if (id === 'stack') {
+    for (let i = current + 1; i < boardState.cards.length; i++) {
+      cardsArr.push(<Card key={i} name={boardState.cards[i].name} />, <br />);
     }
   }
 
-  if (props.id === 'inProgress' && card.cards[current]) {
-    console.log('in if', card.cards[current]);
+  if (id === 'inProgress' && boardState.cards[current]) {
     cardsArr.push(
       <div>
         <Card
           className={classes.board}
           key={current}
-          name={card.cards[current].name}
-          url={card.cards[current].url}
-          card={card.cards[current]}
+          name={boardState.cards[current].name}
+          url={boardState.cards[current].url}
+          card={boardState.cards[current]}
         />
         <Button onClick={() => dispatch(increment())}>Card Complete</Button>
       </div>
     );
   }
 
-  if (props.id === 'complete') {
+  if (id === 'complete') {
     for (let i = 0; i < current; i++) {
-      cardsArr.push(<Card key={i} name={card.cards[i].name} />, <br />);
+      cardsArr.push(<Card key={i} name={boardState.cards[i].name} />, <br />);
     }
   }
   return (

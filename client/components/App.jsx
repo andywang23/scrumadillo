@@ -17,14 +17,11 @@ class App extends Component {
     this.state = {
       username: null,
       userId: null,
-      // hacky state values to conditionally render different components on '/' route
       loggedIn: false,
-      // showSignUp: false,
     };
     this.toggleLogin = this.toggleLogin.bind(this);
     this.toggleLogout = this.toggleLogout.bind(this);
-    this.signupFunction = this.signupFunction.bind(this);
-    // this.showSignUpFunction = this.showSignUpFunction.bind(this);
+    this.registerUser = this.registerUser.bind(this);
     // this.github = this.github.bind(this);
   }
 
@@ -47,7 +44,7 @@ class App extends Component {
       .catch((error) => console.log(error));
   }
 
-  signupFunction(username, password, confirm) {
+  registerUser(username, password, confirm) {
     if (password === confirm) {
       console.log('signup function');
       axios
@@ -62,13 +59,9 @@ class App extends Component {
               username: user.username,
               userId: user._id,
             });
-          } else {
-            console.log('unsuccess');
-          }
+          } else console.log('unsuccess');
         });
-    } else {
-      console.log('passwords not matched');
-    }
+    } else console.log('passwords not matched');
   }
 
   /* Didn't complete the Github authentication process.
@@ -92,7 +85,7 @@ class App extends Component {
   //   }
   // }
 
-  // showSignUpFunction() {
+  // registerUser() {
   //   this.setState({ showSignUp: true });
   // }
 
@@ -103,17 +96,6 @@ class App extends Component {
   // }
 
   render() {
-    // let main;
-    // // Shows <Canvas /> when logged in
-    // if (this.state.loggedIn) {
-    //   main = <Canvas logout={this.toggleLogout} />;
-    //   // Shows <Login /> when not logged in
-    // } else {
-    //   main = (
-    //     <Login login={this.toggleLogin} showsignup={this.showSignUpFunction} />
-    //   );
-    // }
-
     return (
       <div className="App">
         <Router>
@@ -122,7 +104,7 @@ class App extends Component {
               path="/signup"
               render={() => (
                 <Signup
-                  signup={this.signupFunction}
+                  registerUser={this.registerUser}
                   loggedIn={this.state.loggedIn}
                 />
               )}
@@ -134,6 +116,7 @@ class App extends Component {
                 <Canvas
                   logout={this.toggleLogout}
                   loggedIn={this.state.loggedIn}
+                  username={this.state.username}
                 />
               )}
             />
@@ -143,7 +126,6 @@ class App extends Component {
               render={() => (
                 <Login
                   toggleLogin={this.toggleLogin}
-                  showsignup={this.showSignUpFunction}
                   loggedIn={this.state.loggedIn}
                 />
               )}

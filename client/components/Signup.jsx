@@ -6,9 +6,9 @@ import { Redirect } from 'react-router-dom';
 
 class Signup extends React.Component {
   render() {
-    const { signup, loggedIn } = props;
+    const { registerUser, loggedIn } = this.props;
 
-    if (!loggedIn) return <Redirect to="/" />;
+    if (loggedIn) return <Redirect to="/" />;
 
     return (
       <div
@@ -38,8 +38,7 @@ class Signup extends React.Component {
           }}
         >
           <img
-            // logo url
-            src=""
+            src="../assets/icon.png"
             alt="SCRUMadillo"
             style={{ width: '300px', marginBottom: '15px' }}
           ></img>
@@ -94,7 +93,7 @@ class Signup extends React.Component {
           <button
             onClick={(e) => {
               e.preventDefault();
-              signup(
+              registerUser(
                 document.getElementById('input-username').value,
                 document.getElementById('input-password').value,
                 document.getElementById('input-confirm-password').value

@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch } from 'react-redux';
 import { getLogin } from '../reducers/loginSlice';
-import { assignUser, newState } from '../reducers/cardSlice';
+import { assignUser, newState } from '../reducers/boardSlice';
 import { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
@@ -31,21 +31,9 @@ const Canvas = (props) => {
   const { logout, loggedIn, username } = props;
 
   if (!loggedIn) return <Redirect to="/login" />;
-  // console.log('props in Canvas -> ', props);
-  // dispatch(
-  //   getLogin({
-  //     username: props.username,
-  //     userId: props.userId,
-  //   })
-  // );
-  // dispatch(
-  //   assignUser({
-  //     username: props.username,
-  //   })
-  // );
 
   useEffect(() => {
-    fetch(`/server/boardState/${props.username}`)
+    fetch(`/server/boardState/${username}`)
       .then((response) => response.json())
       .then((data) =>
         dispatch(

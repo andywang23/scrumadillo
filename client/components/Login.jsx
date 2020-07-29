@@ -6,7 +6,7 @@ import { Link, Redirect } from 'react-router-dom';
 class Login extends React.Component {
   // check username and password with database
   render() {
-    const { toggleLogin, showsignup, loggedIn } = this.props;
+    const { toggleLogin, loggedIn } = this.props;
 
     if (loggedIn) return <Redirect to="/" />;
 
@@ -110,7 +110,6 @@ class Login extends React.Component {
                 fontWeight: 'bold',
                 borderRadius: '4px',
               }}
-              onClick={this.showsignup}
             >
               Sign Up
             </button>
