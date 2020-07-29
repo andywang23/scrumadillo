@@ -32,7 +32,7 @@ const updateBoardServer = (store) => (next) => (action) => {
   })
     .then((resp) => resp.json())
     .then((data) => {
-      console.log('inside updateBoardSever', data);
+      console.log('inside updateBoardServer', data);
     });
   let result = next(action);
   return result;
