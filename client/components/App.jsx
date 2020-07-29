@@ -85,10 +85,6 @@ class App extends Component {
   //   }
   // }
 
-  // registerUser() {
-  //   this.setState({ showSignUp: true });
-  // }
-
   // componentDidMount() {
   //   fetch('/server/cards')
   //     .then((data) => data.json())
