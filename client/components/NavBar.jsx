@@ -34,7 +34,8 @@ const NavBar = (props) => {
       <AppBar position="static" color="transparent">
         <Toolbar>
           <IconButton edge="start">
-            <img src={logo} style={{ width: 165, height: 80 }}></img>
+            <img src={logo} onClick={logout} style={{ width: 165, height: 80 }}> 
+            </img>
           </IconButton>
           <Button
             className={classes.button2}
@@ -43,7 +44,7 @@ const NavBar = (props) => {
               fetch('/server/cards')
                 .then((resp) => resp.json())
                 .then((data) => {
-                  dispatch(getCards(data));
+                  // dispatch(getCards(data));
                   dispatch(getAll(data));
                 });
               document.querySelector('#getCards').style.display = 'none';
