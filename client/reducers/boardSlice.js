@@ -9,19 +9,16 @@ export const boardSlice = createSlice({
     current: 0, //index of current card
     username: '',
     cards: [], // an array of card objects filled from the deck
-    done: []
   },
   reducers: {
-    complete: (state) => {
-      let keep = state.cards[0]
-      state.cards.shift();
-      state.done.push(keep)
+    increment: (state) => {
+      state.current += 1;
     },
-    grabTechFromCompletePile : (state) => {
-      let keep = state.done[state.done.length-1]
-      state.done.pop()
-      state.cards.unshift(keep)
+
+    decrement: (state) => {
+      if (state.current >= 0) state.current -= 1;
     },
+
     addCard: (state, action) => {
       state.cards.push(action.payload);
     },
@@ -39,17 +36,41 @@ export const boardSlice = createSlice({
       state.current = action.payload.current;
       state.cards = action.payload.cards;
     },
+
+    skipToCard: (state, action) => {
+      const { targetTech } = action.payload;
+      const newCurrent = state.cards.findIndex(
+        (card) => card.name === targetTech
+      );
+      state.current = newCurrent;
+    },
+
+    completeTask: (state, action) => {
+      //will receive todoName in payload
+      //look at cards[current] object for todo array
+      //iterate through todo array and look for object with a name value === todoName from payload
+      //set completed = !completed
+      const { todoName } = action.payload;
+      const currentCard = state.cards[state.current];
+      const currentTodos = currentCard.todo;
+      currentTodos.forEach((todo) => {
+        if (todo.taskName === todoName) todo.completed = !todo.completed;
+      });
+    },
   },
 });
 
 export const {
-  grabTechFromCompletePile,
   addCard,
   getAll,
   complete,
   getCards,
   assignUser,
   newState,
+  increment,
+  decrement,
+  completeTask,
+  skipToCard,
 } = boardSlice.actions;
 
 export const selectBoard = (state) => state;
