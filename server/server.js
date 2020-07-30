@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const request = require('superagent');
+// const request = require('superagent');
 
 const githubController = require('./controllers/github-controller.js');
 const boardController = require('./controllers/board-controller.js');
 
 const stackRouter = require('./routers/stack-router.js');
 const userRouter = require('./routers/user-router.js');
+// const boardRouter = require('./routers/board-router.js');\
 
 const main = express.Router();
 
@@ -41,7 +42,7 @@ main.post('/boardState', boardController.saveBoard, (req, res) => {
   return res.status(200).json(res.locals.board);
 });
 
-/** Routes for handling get requests **/
+/** Routes for handling requests **/
 main.use('/stack', stackRouter);
 main.use('/user', userRouter);
 

@@ -11,49 +11,37 @@ import { getCards } from '../reducers/deckSlice';
 import { getAll } from '../reducers/boardslice';
 
 const useStyles = makeStyles(() => ({
-  root: {
-    flexGrow: 1,
-  },
   button: {
     marginLeft: 'auto',
   },
   button2: {
     marginRight: 'auto',
   },
-  title: {
-    flexGrow: 1,
-  },
 }));
 
-const NavBar = (props) => {
-  const { logout } = props;
-  const classes = useStyles();
+const NavBar = ({ logout }) => {
+  
+  const { button, button2 } = useStyles();
   const dispatch = useDispatch();
+  
+  const handleClick = () => {
+    fetch('/server/cards')
+      .then((resp) => resp.json())
+      .then((data) => {
+        dispatch(getAll(data));
+      });
+  }
   return (
-    <div>
-      <AppBar position="static" color="transparent">
+    <div >
+      <AppBar position="static" color="#e8eaf6">
         <Toolbar>
           <IconButton edge="start">
-            <img src={logo} onClick={logout} style={{ width: 165, height: 80 }}> 
-            </img>
+            <img src={logo} onClick={logout} className="logo" /> 
           </IconButton>
-          <Button
-            className={classes.button2}
-            id="getCards"
-            onClick={() => {
-              fetch('/server/cards')
-                .then((resp) => resp.json())
-                .then((data) => {
-                  // dispatch(getCards(data));
-                  dispatch(getAll(data));
-                });
-              document.querySelector('#getCards').style.display = 'none';
-            }}
-          >
+          <Button className={button2} onClick={handleClick}>
             Add Cards
           </Button>
-
-          <Button className={classes.button} onClick={logout}>
+          <Button className={button} onClick={logout}>
             Logout
           </Button>
         </Toolbar>

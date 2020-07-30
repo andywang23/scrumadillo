@@ -12,13 +12,11 @@ import { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'left',
     color: theme.palette.text.secondary,
+    backgroundColor: '#f9f9f9',
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -27,49 +25,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Canvas = (props) => {
-  const { logout, loggedIn, username } = props;
-
+const Canvas = ({ logout, loggedIn, username }) => {
   if (!loggedIn) return <Redirect to="/login" />;
 
   useEffect(() => {
     // fetch request for user table
     fetch(`/server/boardState/${username}`)
       .then((response) => response.json())
-      .then((data) =>
-        dispatch(
-          newState({
-            username: data.username,
-            current: data.current,
-            cards: data.cards,
-          })
-        )
+      .then(({ username, current, cards }) =>
+        dispatch(newState({ username, current, cards }))
       );
   });
 
-  const classes = useStyles();
+  const { paper, heading } = useStyles();
 
   return (
-    <div className={classes.root}>
+  <div>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <NavBar logout={logout} />
         </Grid>
         <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>
-            <Typography className={classes.heading}>To Do:</Typography>
+          <Paper className={paper}>
+            <Typography className={heading}>To Do:</Typography>
             <Board id="stack" />
           </Paper>
         </Grid>
         <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            <Typography className={classes.heading}>In Progress:</Typography>
+          <Paper className={paper}>
+            <Typography className={heading}>In Progress:</Typography>
             <Board id="inProgress" />
           </Paper>
         </Grid>
         <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>
-            <Typography className={classes.heading}>Completed:</Typography>
+          <Paper className={paper}>
+            <Typography className={heading}>Completed:</Typography>
             <Board id="complete" />
           </Paper>
         </Grid>

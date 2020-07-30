@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-const axios = require('axios');
-
 //import { useDispatch, useSelector } from 'react-redux';
 // merge resolved Sunday 5:46 PM
-
 // import { NavBar } from './NavBar';
 import Canvas from './Canvas';
 import Signup from './Signup';
@@ -16,49 +12,72 @@ class App extends Component {
     super(props);
     this.state = {
       username: null,
+      password: null,
+      confirm: null,
       userId: null,
       loggedIn: false,
     };
+    this.update = this.update.bind(this);
     this.toggleLogin = this.toggleLogin.bind(this);
     this.toggleLogout = this.toggleLogout.bind(this);
     this.registerUser = this.registerUser.bind(this);
     // this.github = this.github.bind(this);
   }
 
+  update(field) {
+    return (e) => this.setState({ [field]: e.target.value });
+  }
+
   toggleLogout() {
     this.setState({ loggedIn: false });
   }
 
-  toggleLogin(username, password) {
-    axios
-      .post('/server/user/login', { username, password })
+  toggleLogin(e) {
+    e.preventDefault();
+    const { username, password } = this.state;
+    fetch('/server/user/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'Application/JSON',
+      },
+      body: JSON.stringify({ username, password }),
+    })
+      .then((resp) => resp.json())
       // assign user to state
-      .then((user) => {
-        console.log('logged in -> ', user.data);
+      .then(({ username, _id }) => {
         this.setState({
           loggedIn: true,
-          username: user.data.username,
-          userId: user.data._id,
+          username,
+          userId: _id,
+          password: null,
         });
       })
       .catch((error) => console.log(error));
   }
 
-  registerUser(username, password, confirm) {
+  registerUser(e) {
+    e.preventDefault();
+    const { username, password, confirm } = this.state;
     if (password === confirm) {
-      console.log('signup function');
-      axios.post('/server/user/signup', { username: username, password: password }).then((user) => {
-        if (user) {
-          alert('account created successfully');
-          window.location.href = 'http://localhost:8080/';
-
-          this.setState({
-            loggedIn: true,
-            username: user.username,
-            userId: user._id,
-          });
-        } else console.log('unsuccess');
-      });
+      fetch('/server/user/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'Application/JSON',
+        },
+        body: JSON.stringify({ username, password }),
+      })
+        .then((resp) => resp.json())
+        .then(({ username, _id }) => {
+          if (username) {
+            alert('account created successfully');
+            this.setState({
+              loggedIn: true,
+              username,
+              userId: _id,
+              password: null,
+            });
+          } else console.log('unsuccess');
+        });
     } else console.log('passwords not matched');
   }
 
@@ -90,6 +109,7 @@ class App extends Component {
   // }
 
   render() {
+    console.log(this.state);
     return (
       <div className="App">
         <Router>
@@ -97,7 +117,11 @@ class App extends Component {
             <Route
               path="/signup"
               render={() => (
-                <Signup registerUser={this.registerUser} loggedIn={this.state.loggedIn} />
+                <Signup
+                  update={this.update}
+                  registerUser={this.registerUser}
+                  loggedIn={this.state.loggedIn}
+                />
               )}
             />
             <Route
@@ -114,7 +138,13 @@ class App extends Component {
             <Route
               exact
               path="/login"
-              render={() => <Login toggleLogin={this.toggleLogin} loggedIn={this.state.loggedIn} />}
+              render={() => (
+                <Login
+                  update={this.update}
+                  toggleLogin={this.toggleLogin}
+                  loggedIn={this.state.loggedIn}
+                />
+              )}
             />
           </Switch>
         </Router>
