@@ -22,6 +22,7 @@ userController.createUser = async (req, res, next) => {
     await db.query(createUserQuery);
     return next();
   } catch (err) {
+    res.send({ err: 'User was not able to be created' });
     return next({ error: err });
   }
 };
@@ -42,14 +43,17 @@ userController.verifyUser = async (req, res, next) => {
 
   if (isMatch) {
     console.log("we're in!");
-    res.locals.username = userRow.username;
-    res.locals.id = userRow.id;
+    res.locals.username = userRow.name;
+    res.locals.id = userRow._id;
+    console.log(res.locals);
     return next();
-  } else
+  } else {
+    res.send({ err: 'Validation failed' });
     return next({
       error: 'Username and Password combination was not found.',
       status: 401,
     });
+  }
 };
 
 module.exports = userController;

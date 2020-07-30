@@ -16,6 +16,7 @@ class App extends Component {
       confirm: null,
       userId: null,
       loggedIn: false,
+      errorMsg: '',
     };
     this.update = this.update.bind(this);
     this.toggleLogin = this.toggleLogin.bind(this);
@@ -44,13 +45,15 @@ class App extends Component {
     })
       .then((resp) => resp.json())
       // assign user to state
-      .then(({ username, _id }) => {
-        this.setState({
-          loggedIn: true,
-          username,
-          userId: _id,
-          password: null,
-        });
+      .then(({ username, id, err = null }) => {
+        if (!err)
+          this.setState({
+            loggedIn: true,
+            username,
+            userId: id,
+            password: null,
+          });
+        else this.setState({ errorMsg: 'Username/Password Invalid' });
       })
       .catch((error) => console.log(error));
   }
@@ -67,18 +70,22 @@ class App extends Component {
         body: JSON.stringify({ username, password }),
       })
         .then((resp) => resp.json())
-        .then(({ username, _id }) => {
-          if (username) {
+        .then(({ username, id, err = null }) => {
+          if (!err) {
             alert('account created successfully');
             this.setState({
               loggedIn: true,
               username,
-              userId: _id,
+              userId: id,
               password: null,
             });
-          } else console.log('unsuccess');
+          } else
+            this.setState({
+              errorMsg:
+                'User was not able to be created - possible duplicate username',
+            });
         });
-    } else console.log('passwords not matched');
+    } else this.setState({ errorMsg: 'Passwords do not match' });
   }
 
   /* Didn't complete the Github authentication process.
@@ -121,6 +128,7 @@ class App extends Component {
                   update={this.update}
                   registerUser={this.registerUser}
                   loggedIn={this.state.loggedIn}
+                  errorMsg={this.state.errorMsg}
                 />
               )}
             />
@@ -143,6 +151,7 @@ class App extends Component {
                   update={this.update}
                   toggleLogin={this.toggleLogin}
                   loggedIn={this.state.loggedIn}
+                  errorMsg={this.state.errorMsg}
                 />
               )}
             />
