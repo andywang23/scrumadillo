@@ -24,8 +24,8 @@ const NavBar = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   return (
-    <div>
-      <AppBar position="static" color="transparent">
+    <div >
+      <AppBar position="static" color="#e8eaf6">
         <Toolbar>
           <IconButton edge="start">
             <img src={logo} onClick={logout} style={{ width: 165, height: 80 }}> 

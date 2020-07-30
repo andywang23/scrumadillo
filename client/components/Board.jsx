@@ -2,22 +2,21 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Card from './Card.jsx';
-import { selectBoard, complete, grabTechFromCompletePile } from '../reducers/boardSlice';
+import { selectBoard, increment, decrement } from '../reducers/boardSlice';
 import Button from '@material-ui/core/Button';
 
 const Board = (props) => {
   const { id } = props;
   const dispatch = useDispatch();
-  console.log('use selector', useSelector(selectBoard));
   const { boardState } = useSelector(selectBoard);
   const { current } = boardState;
-  console.log('current', current);
+ 
   const cardsArr = [];
 
   if (id === 'stack')
-    boardState.cards.forEach((card, idx) =>
-      cardsArr.push(<Card key={idx} name={card.name} />, <br />)
-    );
+    for (let i = current + 1; i < boardState.cards.length; i += 1) {
+      cardsArr.push(<Card key={i} name={boardState.cards[i].name} />, <br />);
+    }
 
   if (id === 'inProgress' && boardState.cards[current]) {
     cardsArr.push(
@@ -29,16 +28,18 @@ const Board = (props) => {
           url={boardState.cards[current].url}
           card={boardState.cards[current]}
         />
-        <Button onClick={() => dispatch(complete())}>Card Complete</Button>
+        <Button onClick={() => dispatch(increment())}>Card Complete</Button>
       </div>
     );
   }
 
   if (id === 'complete') {
-    for (let i = 0; i < boardState.done.length; i++) {
-      cardsArr.push(<Card key={i} name={boardState.done[i].name} />, <br />);
+    for (let i = 0; i < current; i++) {
+      cardsArr.push(<Card key={i} name={boardState.cards[i].name} />, <br />);
     }
-    cardsArr.push(<Button onClick={() => dispatch(grabTechFromCompletePile())}>Go Back</Button>)
+    cardsArr.push(
+      <Button onClick={() => dispatch(decrement())}>Go Back</Button>
+    );
   }
   return (
     <div>

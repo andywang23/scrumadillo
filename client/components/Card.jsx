@@ -4,6 +4,8 @@ import Task from './Task';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { useDispatch } from 'react-redux';
+import { skipToCard } from '../reducers/boardSlice';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -21,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
 const Card = (props) => {
   //props only has card if we're in the "in progress board"
   const { card = null, name, url } = props;
+  const dispatch = useDispatch();
+  console.log('in card - card', card);
 
   const classes = useStyles();
 
@@ -34,16 +38,23 @@ const Card = (props) => {
             name={todo[i].taskName}
             detail={todo[i].details}
             complete={todo[i].completed}
-            id={`id${i}`}
+            id={`${name}-${i}`}
           />
         </div>
       );
     }
   }
+
+  const handleTitleClick = (e) => {
+    dispatch(skipToCard({ targetTech: e.target.innerText }));
+  };
+
   return (
     <div>
       <Paper className={classes.paper}>
-        <Typography className={classes.heading}>{name}</Typography>
+        <Typography className={classes.heading} onClick={handleTitleClick}>
+          {name}
+        </Typography>
         <br />
         <a href={url} target="_blank">
           <em>{url}</em>
