@@ -2,7 +2,7 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE,
+  connectionString: process.env.PG_URI,
 });
 
 // // You must export your model through module.exports

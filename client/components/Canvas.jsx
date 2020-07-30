@@ -33,6 +33,7 @@ const Canvas = (props) => {
   if (!loggedIn) return <Redirect to="/login" />;
 
   useEffect(() => {
+    // fetch request for user table
     fetch(`/server/boardState/${username}`)
       .then((response) => response.json())
       .then((data) =>

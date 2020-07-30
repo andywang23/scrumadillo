@@ -31,7 +31,7 @@ class App extends Component {
 
   toggleLogin(username, password) {
     axios
-      .post('/server/login', { username, password })
+      .post('/server/user/login', { username, password })
       // assign user to state
       .then((user) => {
         console.log('logged in -> ', user.data);
@@ -47,20 +47,18 @@ class App extends Component {
   registerUser(username, password, confirm) {
     if (password === confirm) {
       console.log('signup function');
-      axios
-        .post('/server/signup', { username: username, password: password })
-        .then((user) => {
-          if (user) {
-            alert('account created successfully');
-            window.location.href = 'http://localhost:8080/';
+      axios.post('/server/user/signup', { username: username, password: password }).then((user) => {
+        if (user) {
+          alert('account created successfully');
+          window.location.href = 'http://localhost:8080/';
 
-            this.setState({
-              loggedIn: true,
-              username: user.username,
-              userId: user._id,
-            });
-          } else console.log('unsuccess');
-        });
+          this.setState({
+            loggedIn: true,
+            username: user.username,
+            userId: user._id,
+          });
+        } else console.log('unsuccess');
+      });
     } else console.log('passwords not matched');
   }
 
@@ -99,10 +97,7 @@ class App extends Component {
             <Route
               path="/signup"
               render={() => (
-                <Signup
-                  registerUser={this.registerUser}
-                  loggedIn={this.state.loggedIn}
-                />
+                <Signup registerUser={this.registerUser} loggedIn={this.state.loggedIn} />
               )}
             />
             <Route
@@ -119,12 +114,7 @@ class App extends Component {
             <Route
               exact
               path="/login"
-              render={() => (
-                <Login
-                  toggleLogin={this.toggleLogin}
-                  loggedIn={this.state.loggedIn}
-                />
-              )}
+              render={() => <Login toggleLogin={this.toggleLogin} loggedIn={this.state.loggedIn} />}
             />
           </Switch>
         </Router>
