@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import logo from '../assets/icon.png';
@@ -12,26 +12,40 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import { useDispatch } from 'react-redux';
-import { getCards } from '../reducers/deckSlice';
-import { getAll } from '../reducers/boardslice';
+import { getStack , selectStack } from '../reducers/deckSlice';
+// import { getAll } from '../reducers/boardslice';
 
 const useStyles = makeStyles(() => ({
   button: {
     marginLeft: 'auto',
   },
-  button2: {
-    marginRight: 'auto',
-  },
+  // button2: {
+  //   marginRight: 'auto',
+  // },
   dropMenu: {
     marginRight: 'auto',
     minWidth: 120,
   }
 }));
 
-const NavBar = (props) => {
-  const { logout } = props;
-  const classes = useStyles();
+const NavBar = ({ logout }) => {
+  
+  const { button, button2 , dropMenu} = useStyles();
   const dispatch = useDispatch();
+  
+  const handleClick = (e) => {
+    let val = e.target.value
+    dispatch(selectStack(val))
+  }
+  useEffect(() => {
+    fetch('/server/cards')
+      .then((resp) => resp.json())
+      .then((data) => {
+        dispatch(getStack(data));
+      })
+      .catch(err => console.log(err))
+  })
+
   return (
     <div >
       <AppBar position="static" color="#e8eaf6">
@@ -39,30 +53,18 @@ const NavBar = (props) => {
           <IconButton edge="start">
             <img src={logo} onClick={logout} className="logo" /> 
           </IconButton>
-          {/* <Button
-            className={classes.button2}
-            id="getCards"
-            onClick={() => {
-              fetch('/server/cards')
-                .then((resp) => resp.json())
-                .then((data) => {
-                  // dispatch(getCards(data));
-                  dispatch(getAll(data));
-                });
-              document.querySelector('#getCards').style.display = 'none';
-            }}
-          >
-            Add Cards
-          </Button> */}
-          <FormControl className={classes.dropMenu}>
+          <FormControl className={dropMenu}>
             <InputLabel>Stacks</InputLabel>
-            <Select value ={3} onChange={(event)=> alert(event.target.value)}>
+            <Select value ={3} onChange={handleClick}>
               <MenuItem value ={0}>MERN</MenuItem>
               <MenuItem value ={1}>NERP</MenuItem>
-              <MenuItem value ={2}> stack 3</MenuItem>
+              <MenuItem value ={2}>MEAN</MenuItem>
             </Select>
           </FormControl>
-          <Button className={classes.button} onClick={logout}>
+          {/* <Button className={button2} onClick={handleClick}>
+            Add Cards
+          </Button> */}
+          <Button className={button} onClick={logout}>
             Logout
           </Button>
         </Toolbar>
