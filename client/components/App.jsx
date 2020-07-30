@@ -66,14 +66,14 @@ class App extends Component {
       console.log('signup function');
       axios
         .post('/server/signup', { username: this.state.username, password: this.state.password })
-        .then((user) => {
-          if (user) {
+        .then(({ data }) => {
+          if (data.username) {
             alert('account created successfully');
-            window.location.href = 'http://localhost:8080/';
+            // window.location.href = 'http://localhost:8080/';
             this.setState({
               loggedIn: true,
-              username: user.username,
-              userId: user._id,
+              username: data.username,
+              userId: data._id,
             });
           } else console.log('unsuccess');
         });
