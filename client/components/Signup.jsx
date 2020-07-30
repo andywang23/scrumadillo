@@ -5,28 +5,48 @@ import logo from '../assets/icon.png';
 // familiarize with how add card works without redirect to diff endpoint
 // app, router, axios
 
-const Signup = ({ registerUser, loggedIn, update }) => {
-    // const  = this.props;
+const Signup = ({ registerUser, loggedIn, update, errorMsg }) => {
+  // const  = this.props;
   if (loggedIn) return <Redirect to="/" />;
   return (
-    <div className="form-container" >
+    <div className="form-container">
       <form className="signup-form" id="signup-form" onSubmit={registerUser}>
         <img src={logo} alt="SCRUMadillo" className="icon" />
         <br></br>
-        <input className="form-input" id="input-username" name="username" type="text" placeholder="Username" onChange={update('username')} />
+        <input
+          className="form-input"
+          id="input-username"
+          name="username"
+          type="text"
+          placeholder="Username"
+          onChange={update('username')}
+        />
         <br></br>
-        <input className="form-input" id="input-password" name="password" type="password" placeholder="Password" onChange={update('password')} />
-        <input className="form-input" id="input-confirm-password" name="confirm-password" type="password" placeholder="Confirm Password" onChange={update('confirm')} />
+        <input
+          className="form-input"
+          id="input-password"
+          name="password"
+          type="password"
+          placeholder="Password"
+          onChange={update('password')}
+        />
+        <input
+          className="form-input"
+          id="input-confirm-password"
+          name="confirm-password"
+          type="password"
+          placeholder="Confirm Password"
+          onChange={update('confirm')}
+        />
         <br></br>
-        <button className="form-submit-button">
-          Sign Up
-        </button>
+        <button className="form-submit-button">Sign Up</button>
+        <div className="error-msg">{errorMsg}</div>
         <div>
           <a href="https://github.com/login/oauth/authorize?client_id=fade47f049a7b9f4a3dc">
             <img
               className="github-button"
               id="github-logo"
-              src="https://www.backblaze.com/blog/wp-content/uploads/2018/05/github-logo.png"   
+              src="https://www.backblaze.com/blog/wp-content/uploads/2018/05/github-logo.png"
             />
           </a>
           {/* Didn't get to Google OAuth
@@ -41,6 +61,6 @@ const Signup = ({ registerUser, loggedIn, update }) => {
       </form>
     </div>
   );
-}
+};
 
 export default Signup;
