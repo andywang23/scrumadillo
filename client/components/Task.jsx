@@ -10,25 +10,14 @@ import { completeTask } from '../reducers/boardSlice';
 const themes = createMuiTheme({
   palette: {
     primary: {
-      light: '#E3E1E2',
-      main: '#3f50b5',
-      dark: '#DED7DE',
+      main: '#fafafa',
       contrastText: '#fff',
-    },
-    secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
     },
   },
 });
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
   detail: {
-    backgroundColor: themes.palette.primary.light,
+    backgroundColor: themes.palette.primary.main,
     paddingLeft: theme.spacing(4),
   },
 }));
@@ -39,8 +28,8 @@ const Task = (props) => {
   const dispatch = useDispatch();
 
   return (
-    <List dense className={classes.root}>
-      <ListItem className={classes.name}>
+    <List>
+      <ListItem>
         <ListItemSecondaryAction>
           {complete ? (
             <Checkbox
@@ -68,7 +57,8 @@ const Task = (props) => {
         <span
           style={
             complete
-              ? { textDecoration: 'line-through' }
+              ? { textDecoration: 'line-through',
+                  color: '#ff6f60' }
               : { textDecoration: 'none' }
           }
         >

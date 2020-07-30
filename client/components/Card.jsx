@@ -8,9 +8,6 @@ import { useDispatch } from 'react-redux';
 import { skipToCard } from '../reducers/boardSlice';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -20,12 +17,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     color: '#363738',
     fontWeight: theme.typography.fontWeightBold,
-  },
-  task: {
-    textAlign: 'center',
-  },
-  box: {
-    marginRight: 'auto',
   },
 }));
 
@@ -42,7 +33,7 @@ const Card = (props) => {
     const { todo } = card;
     for (let i = 0; i < todo.length; i += 1) {
       todoArray.push(
-        <div>
+        <div className='task'>
           <Task
             name={todo[i].taskName}
             detail={todo[i].details}
@@ -59,7 +50,7 @@ const Card = (props) => {
   };
 
   return (
-    <div className={classes.root}>
+    <div>
       <Paper className={classes.paper}>
         <Typography className={classes.heading} onClick={handleTitleClick}>
           {name}
