@@ -11,17 +11,11 @@ import { getCards } from '../reducers/deckSlice';
 import { getAll } from '../reducers/boardslice';
 
 const useStyles = makeStyles(() => ({
-  root: {
-    flexGrow: 1,
-  },
   button: {
     marginLeft: 'auto',
   },
   button2: {
     marginRight: 'auto',
-  },
-  title: {
-    flexGrow: 1,
   },
 }));
 
@@ -30,8 +24,8 @@ const NavBar = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   return (
-    <div>
-      <AppBar position="static" color="transparent">
+    <div >
+      <AppBar position="static" color="#e8eaf6">
         <Toolbar>
           <IconButton edge="start">
             <img src={logo} onClick={logout} className="logo" /> 

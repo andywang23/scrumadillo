@@ -4,21 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import Card from './Card.jsx';
 import { selectBoard, increment, decrement } from '../reducers/boardSlice';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(() => ({
-  board: {
-    backgroundColor: '#004ba0',
-  },
-}));
 
 const Board = (props) => {
   const { id } = props;
-
   const dispatch = useDispatch();
   const { boardState } = useSelector(selectBoard);
   const { current } = boardState;
-  const classes = useStyles();
   const cardsArr = [];
 
   if (id === 'stack')
@@ -30,7 +21,7 @@ const Board = (props) => {
     cardsArr.push(
       <div>
         <Card
-          className={classes.board}
+          className='board'
           key={current}
           name={boardState.cards[current].name}
           url={boardState.cards[current].url}
