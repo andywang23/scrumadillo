@@ -7,28 +7,29 @@ import logo from '../assets/icon.png';
 
 class Signup extends React.Component {
   render() {
-    const { registerUser, loggedIn } = this.props;
+    const { registerUser, loggedIn, update } = this.props;
 
     if (loggedIn) return <Redirect to="/" />;
 
     return (
       <div className="form-container" >
-        <form className="signup-form" id="signup-form">
+        <form className="signup-form" id="signup-form" onSubmit={registerUser}>
           <img src={logo} alt="SCRUMadillo" className="icon" />
           <br></br>
-          <input className="form-input" id="input-username" name="username" type="text" placeholder="Username" />
+          <input className="form-input" id="input-username" name="username" type="text" placeholder="Username" onChange={update('username')} />
           <br></br>
-          <input className="form-input" id="input-password" name="password" type="password" placeholder="Password" />
-          <input className="form-input" id="input-confirm-password" name="confirm-password" type="password" placeholder="Confirm Password" />
+          <input className="form-input" id="input-password" name="password" type="password" placeholder="Password" onChange={update('password')} />
+          <input className="form-input" id="input-confirm-password" name="confirm-password" type="password" placeholder="Confirm Password" onChange={update('confirm')} />
           <br></br>
-          <button className="form-submit-button" onClick={(e) => {
-              e.preventDefault();
-              registerUser(
-                document.getElementById('input-username').value,
-                document.getElementById('input-password').value,
-                document.getElementById('input-confirm-password').value
-              );
-            }}
+          <button className="form-submit-button" 
+          // onClick={(e) => {
+          //     e.preventDefault();
+          //     registerUser(
+          //       document.getElementById('input-username').value,
+          //       document.getElementById('input-password').value,
+          //       document.getElementById('input-confirm-password').value
+          //     );
+          //   }}
           >
             Sign Up
           </button>
