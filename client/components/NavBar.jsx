@@ -19,10 +19,18 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NavBar = (props) => {
-  const { logout } = props;
-  const classes = useStyles();
+const NavBar = ({ logout }) => {
+  
+  const { button, button2 } = useStyles();
   const dispatch = useDispatch();
+  
+  const handleClick = () => {
+    fetch('/server/cards')
+      .then((resp) => resp.json())
+      .then((data) => {
+        dispatch(getAll(data));
+      });
+  }
   return (
     <div >
       <AppBar position="static" color="#e8eaf6">
@@ -30,23 +38,10 @@ const NavBar = (props) => {
           <IconButton edge="start">
             <img src={logo} onClick={logout} className="logo" /> 
           </IconButton>
-          <Button
-            className={classes.button2}
-            id="getCards"
-            onClick={() => {
-              fetch('/server/cards')
-                .then((resp) => resp.json())
-                .then((data) => {
-                  // dispatch(getCards(data));
-                  dispatch(getAll(data));
-                });
-              document.querySelector('#getCards').style.display = 'none';
-            }}
-          >
+          <Button className={button2} onClick={handleClick}>
             Add Cards
           </Button>
-
-          <Button className={classes.button} onClick={logout}>
+          <Button className={button} onClick={logout}>
             Logout
           </Button>
         </Toolbar>

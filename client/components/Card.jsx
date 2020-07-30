@@ -20,13 +20,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Card = (props) => {
+const Card = ({ card = null, name, url }) => {
   //props only has card if we're in the "in progress board"
-  const { card = null, name, url } = props;
   const dispatch = useDispatch();
   console.log('in card - card', card);
 
-  const classes = useStyles();
+  const { paper, heading } = useStyles();
 
   const todoArray = [];
   if (card) {
@@ -51,8 +50,8 @@ const Card = (props) => {
 
   return (
     <div>
-      <Paper className={classes.paper}>
-        <Typography className={classes.heading} onClick={handleTitleClick}>
+      <Paper className={paper}>
+        <Typography className={heading} onClick={handleTitleClick}>
           {name}
         </Typography>
         <br />
