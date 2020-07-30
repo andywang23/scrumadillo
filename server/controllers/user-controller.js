@@ -23,9 +23,10 @@ userController.createUser = (req, res, next) => {
 
 userController.verifyUser = (req, res, next) => {
   const { username, password } = req.body;
-  let checkUserNameExist = `SELECT * FROM public.user WHERE name = '${username}'`;
+  const checkUserNameExist = `SELECT * FROM public.user WHERE name = '${username}'`;
   db.query(checkUserNameExist).then((user) => {
     const userRow = user.rows[0];
+    console.log('user row', userRow);
     if (!user.rows) {
       return res.status(404).json({ name: 'This user does not exist' });
     }

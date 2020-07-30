@@ -50,7 +50,7 @@ main.use('/user', userRouter);
 if (process.env.NODE_ENV === 'production') {
   app.use('/dist', express.static(path.join(__dirname, '../dist')));
   app.get('/', express.static('client'));
-  };
+}
 
 /* --Error Handling-- */
 /** CATCH-ALL ROUTE HANDLER **/
