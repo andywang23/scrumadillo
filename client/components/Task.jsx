@@ -11,19 +11,12 @@ const themes = createMuiTheme({
       main: '#fafafa',
       contrastText: '#fff',
     },
-    // secondary: {
-    //   light: '#ff7961',
-    //   main: '#f44336',
-    //   dark: '#ba000d',
-    //   contrastText: '#000',
-    // },
   },
 });
 const useStyles = makeStyles((theme) => ({
   detail: {
     backgroundColor: themes.palette.primary.main,
     paddingLeft: theme.spacing(4),
-    marginBottom: theme.spacing(0),
   },
 }));
 
@@ -32,11 +25,11 @@ const Task = (props) => {
 
   return (
     <List>
-      <ListItem className={classes.name}>
+      <ListItem>
         <ListItemSecondaryAction>
           <Checkbox
             defaultUnchecked
-            // color="secondary"
+            color="secondary"
             inputProps={{ 'aria-label': 'checkbox with default color' }}
             onClick={() => {
 
