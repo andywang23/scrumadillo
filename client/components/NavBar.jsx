@@ -6,6 +6,11 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
 
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+
 import { useDispatch } from 'react-redux';
 import { getCards } from '../reducers/deckSlice';
 import { getAll } from '../reducers/boardslice';
@@ -17,6 +22,10 @@ const useStyles = makeStyles(() => ({
   button2: {
     marginRight: 'auto',
   },
+  dropMenu: {
+    marginRight: 'auto',
+    minWidth: 120,
+  }
 }));
 
 const NavBar = (props) => {
@@ -30,7 +39,7 @@ const NavBar = (props) => {
           <IconButton edge="start">
             <img src={logo} onClick={logout} className="logo" /> 
           </IconButton>
-          <Button
+          {/* <Button
             className={classes.button2}
             id="getCards"
             onClick={() => {
@@ -44,8 +53,15 @@ const NavBar = (props) => {
             }}
           >
             Add Cards
-          </Button>
-
+          </Button> */}
+          <FormControl className={classes.dropMenu}>
+            <InputLabel>Stacks</InputLabel>
+            <Select value ={3} onChange={(event)=> alert(event.target.value)}>
+              <MenuItem value ={0}>MERN</MenuItem>
+              <MenuItem value ={1}>NERP</MenuItem>
+              <MenuItem value ={2}> stack 3</MenuItem>
+            </Select>
+          </FormControl>
           <Button className={classes.button} onClick={logout}>
             Logout
           </Button>
