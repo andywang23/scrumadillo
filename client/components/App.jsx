@@ -21,7 +21,7 @@ class App extends Component {
       userId: null,
       loggedIn: false,
     };
-    this.update = this.update.bind(this)
+    this.update = this.update.bind(this);
     this.toggleLogin = this.toggleLogin.bind(this);
     this.toggleLogout = this.toggleLogout.bind(this);
     this.registerUser = this.registerUser.bind(this);
@@ -29,12 +29,13 @@ class App extends Component {
   }
 
   update(field) {
-    return e => {
-    console.log(e.target.name, " ", e.target.value)
-      
+    return (e) => {
+      console.log(e.target.name, ' ', e.target.value);
+
       this.setState({
-      [field]: e.target.value
-    });}
+        [field]: e.target.value,
+      });
+    };
   }
 
   toggleLogout() {
@@ -44,9 +45,9 @@ class App extends Component {
   toggleLogin(e) {
     e.preventDefault();
     axios
-      .post('/server/login', { 
-        username: this.state.username, 
-        password: this.state.password 
+      .post('/server/login', {
+        username: this.state.username,
+        password: this.state.password,
       })
       // assign user to state
       .then(({ data }) => {
@@ -65,7 +66,10 @@ class App extends Component {
     if (this.state.password === this.state.confirm) {
       console.log('signup function');
       axios
-        .post('/server/signup', { username: this.state.username, password: this.state.password })
+        .post('/server/signup', {
+          username: this.state.username,
+          password: this.state.password,
+        })
         .then(({ data }) => {
           if (data.username) {
             alert('account created successfully');
@@ -108,7 +112,7 @@ class App extends Component {
   // }
 
   render() {
-    console.log(this.state)
+    console.log(this.state);
     return (
       <div className="App">
         <Router>
