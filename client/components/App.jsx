@@ -16,7 +16,8 @@ class App extends Component {
       confirm: null,
       userId: null,
       loggedIn: false,
-      errorMsg: '',
+      loginErrorMsg: '',
+      registerErrorMsg: '',
     };
     this.update = this.update.bind(this);
     this.toggleLogin = this.toggleLogin.bind(this);
@@ -53,7 +54,7 @@ class App extends Component {
             userId: id,
             password: null,
           });
-        else this.setState({ errorMsg: 'Username/Password Invalid' });
+        else this.setState({ loginErrorMsg: 'Username/Password Invalid' });
       })
       .catch((error) => console.log(error));
   }
@@ -81,11 +82,11 @@ class App extends Component {
             });
           } else
             this.setState({
-              errorMsg:
+              registerErrorMsg:
                 'User was not able to be created - possible duplicate username',
             });
         });
-    } else this.setState({ errorMsg: 'Passwords do not match' });
+    } else this.setState({ registerErrorMsg: 'Passwords do not match' });
   }
 
   /* Didn't complete the Github authentication process.
@@ -128,7 +129,7 @@ class App extends Component {
                   update={this.update}
                   registerUser={this.registerUser}
                   loggedIn={this.state.loggedIn}
-                  errorMsg={this.state.errorMsg}
+                  errorMsg={this.state.registerErrorMsg}
                 />
               )}
             />
@@ -151,7 +152,7 @@ class App extends Component {
                   update={this.update}
                   toggleLogin={this.toggleLogin}
                   loggedIn={this.state.loggedIn}
-                  errorMsg={this.state.errorMsg}
+                  errorMsg={this.state.loginErrorMsg}
                 />
               )}
             />
