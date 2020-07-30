@@ -29,6 +29,7 @@ const Canvas = ({ logout, loggedIn, username }) => {
   if (!loggedIn) return <Redirect to="/login" />;
 
   useEffect(() => {
+    // fetch request for user table
     fetch(`/server/boardState/${username}`)
       .then((response) => response.json())
       .then(({ username, current, cards }) =>

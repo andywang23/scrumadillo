@@ -1,5 +1,4 @@
-const { Board, User } = require('./models/models.js');
-
+const db = require('../models/models.js');
 const boardController = {};
 
 //saves current board state and assigns the logged in user to username
