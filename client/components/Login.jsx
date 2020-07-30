@@ -5,29 +5,21 @@ import logo from '../assets/icon.png';
 class Login extends React.Component {
   // check username and password with database
   render() {
-    const { toggleLogin, loggedIn } = this.props;
+    const { toggleLogin, loggedIn, update } = this.props;
 
     if (loggedIn) return <Redirect to="/" />;
 
     return (
       <div className="form-container" >
-        <form className="login-form" id="login-form">
+        <form className="login-form" id="login-form" onSubmit={toggleLogin} >
           <img className="icon" src={logo} />
           <br></br>
-          <input className="form-input" id="input-username" name="username" type="text" placeholder="Username" />
+          <input className="form-input" id="input-username" name="username" type="text" placeholder="Username" onChange={update("username")} />
           <br></br>
-          <input className="form-input" id="input-password" name="password" type="password" placeholder="Password" />
+          <input className="form-input" id="input-password" name="password" type="password" placeholder="Password" onChange={update("password")} />
           <br></br>
           {/* Takes in the inputs and sets state.logged in to true */}
-          <button
-            className="form-submit-button" 
-            onClick={(event) => {
-              event.preventDefault();
-              toggleLogin(
-                document.getElementById('input-username').value,
-                document.getElementById('input-password').value
-              );
-            }}>
+          <button className="form-submit-button" >
             Login
           </button>
 

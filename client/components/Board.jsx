@@ -10,7 +10,6 @@ const Board = (props) => {
   const dispatch = useDispatch();
   const { boardState } = useSelector(selectBoard);
   const { current } = boardState;
- 
   const cardsArr = [];
 
   if (id === 'stack')

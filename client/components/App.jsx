@@ -16,48 +16,64 @@ class App extends Component {
     super(props);
     this.state = {
       username: null,
+      password: null,
+      confirm: null,
       userId: null,
       loggedIn: false,
     };
+    this.update = this.update.bind(this)
     this.toggleLogin = this.toggleLogin.bind(this);
     this.toggleLogout = this.toggleLogout.bind(this);
     this.registerUser = this.registerUser.bind(this);
     // this.github = this.github.bind(this);
   }
 
+  update(field) {
+    return e => {
+    console.log(e.target.name, " ", e.target.value)
+      
+      this.setState({
+      [field]: e.target.value
+    });}
+  }
+
   toggleLogout() {
     this.setState({ loggedIn: false });
   }
 
-  toggleLogin(username, password) {
+  toggleLogin(e) {
+    e.preventDefault();
     axios
-      .post('/server/login', { username, password })
+      .post('/server/login', { 
+        username: this.state.username, 
+        password: this.state.password 
+      })
       // assign user to state
-      .then((user) => {
-        console.log('logged in -> ', user.data);
+      .then(({ data }) => {
+        console.log('logged in -> ', data);
         this.setState({
           loggedIn: true,
-          username: user.data.username,
-          userId: user.data._id,
+          username: data.username,
+          userId: data._id,
         });
       })
       .catch((error) => console.log(error));
   }
 
-  registerUser(username, password, confirm) {
-    if (password === confirm) {
+  registerUser(e) {
+    e.preventDefault();
+    if (this.state.password === this.state.confirm) {
       console.log('signup function');
       axios
-        .post('/server/signup', { username: username, password: password })
-        .then((user) => {
-          if (user) {
+        .post('/server/signup', { username: this.state.username, password: this.state.password })
+        .then(({ data }) => {
+          if (data.username) {
             alert('account created successfully');
-            window.location.href = 'http://localhost:8080/';
-
+            // window.location.href = 'http://localhost:8080/';
             this.setState({
               loggedIn: true,
-              username: user.username,
-              userId: user._id,
+              username: data.username,
+              userId: data._id,
             });
           } else console.log('unsuccess');
         });
@@ -92,6 +108,7 @@ class App extends Component {
   // }
 
   render() {
+    console.log(this.state)
     return (
       <div className="App">
         <Router>
@@ -100,6 +117,7 @@ class App extends Component {
               path="/signup"
               render={() => (
                 <Signup
+                  update={this.update}
                   registerUser={this.registerUser}
                   loggedIn={this.state.loggedIn}
                 />
@@ -121,6 +139,7 @@ class App extends Component {
               path="/login"
               render={() => (
                 <Login
+                  update={this.update}
                   toggleLogin={this.toggleLogin}
                   loggedIn={this.state.loggedIn}
                 />

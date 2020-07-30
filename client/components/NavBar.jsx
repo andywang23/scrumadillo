@@ -28,8 +28,7 @@ const NavBar = (props) => {
       <AppBar position="static" color="#e8eaf6">
         <Toolbar>
           <IconButton edge="start">
-            <img src={logo} onClick={logout} style={{ width: 165, height: 80 }}> 
-            </img>
+            <img src={logo} onClick={logout} className="logo" /> 
           </IconButton>
           <Button
             className={classes.button2}
