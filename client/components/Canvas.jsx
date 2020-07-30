@@ -25,26 +25,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Canvas = (props) => {
-  const { logout, loggedIn, username } = props;
-
+const Canvas = ({ logout, loggedIn, username }) => {
   if (!loggedIn) return <Redirect to="/login" />;
 
   useEffect(() => {
     fetch(`/server/boardState/${username}`)
       .then((response) => response.json())
-      .then((data) =>
-        dispatch(
-          newState({
-            username: data.username,
-            current: data.current,
-            cards: data.cards,
-          })
-        )
+      .then(({ username, current, cards }) =>
+        dispatch(newState({ username, current, cards }))
       );
   });
 
-  const classes = useStyles();
+  const { paper, heading } = useStyles();
 
   return (
   <div>
@@ -53,20 +45,20 @@ const Canvas = (props) => {
           <NavBar logout={logout} />
         </Grid>
         <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>
-            <Typography className={classes.heading}>To Do:</Typography>
+          <Paper className={paper}>
+            <Typography className={heading}>To Do:</Typography>
             <Board id="stack" />
           </Paper>
         </Grid>
         <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            <Typography className={classes.heading}>In Progress:</Typography>
+          <Paper className={paper}>
+            <Typography className={heading}>In Progress:</Typography>
             <Board id="inProgress" />
           </Paper>
         </Grid>
         <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>
-            <Typography className={classes.heading}>Completed:</Typography>
+          <Paper className={paper}>
+            <Typography className={heading}>Completed:</Typography>
             <Board id="complete" />
           </Paper>
         </Grid>

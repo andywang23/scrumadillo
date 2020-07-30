@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-const axios = require('axios');
-
 //import { useDispatch, useSelector } from 'react-redux';
 // merge resolved Sunday 5:46 PM
-
 // import { NavBar } from './NavBar';
 import Canvas from './Canvas';
 import Signup from './Signup';
@@ -29,12 +25,7 @@ class App extends Component {
   }
 
   update(field) {
-    return e => {
-    console.log(e.target.name, " ", e.target.value)
-      
-      this.setState({
-      [field]: e.target.value
-    });}
+    return e => this.setState({ [field]: e.target.value });
   }
 
   toggleLogout() {
@@ -43,40 +34,50 @@ class App extends Component {
 
   toggleLogin(e) {
     e.preventDefault();
-    axios
-      .post('/server/login', { 
-        username: this.state.username, 
-        password: this.state.password 
-      })
+    const { username, password } = this.state
+    fetch('/server/login', { 
+      method: 'POST',
+			headers: {
+				"Content-Type": "Application/JSON"
+			},
+			body: JSON.stringify ({ username, password })
+    })
+    .then(resp => resp.json())
       // assign user to state
-      .then(({ data }) => {
-        console.log('logged in -> ', data);
-        this.setState({
-          loggedIn: true,
-          username: data.username,
-          userId: data._id,
-        });
-      })
-      .catch((error) => console.log(error));
+    .then(({username, _id}) => {
+      this.setState({
+        loggedIn: true,
+        username,
+        userId: _id,
+        password: null
+      });
+    })
+    .catch((error) => console.log(error));
   }
 
   registerUser(e) {
     e.preventDefault();
-    if (this.state.password === this.state.confirm) {
-      console.log('signup function');
-      axios
-        .post('/server/signup', { username: this.state.username, password: this.state.password })
-        .then(({ data }) => {
-          if (data.username) {
-            alert('account created successfully');
-            // window.location.href = 'http://localhost:8080/';
-            this.setState({
-              loggedIn: true,
-              username: data.username,
-              userId: data._id,
-            });
-          } else console.log('unsuccess');
-        });
+    const { username, password, confirm } = this.state
+    if (password === confirm) {
+      fetch('/server/signup', { 
+        method: 'POST',
+        headers: {
+          "Content-Type": "Application/JSON"
+        },
+        body: JSON.stringify({ username, password })
+      })
+      .then(resp => resp.json())
+      .then(({ username, _id }) => {
+        if (username) {
+          alert('account created successfully');
+          this.setState({
+            loggedIn: true,
+            username,
+            userId: _id,
+            password: null
+          });
+        } else console.log('unsuccess');
+      });
     } else console.log('passwords not matched');
   }
 
