@@ -5,8 +5,7 @@ import Card from './Card.jsx';
 import { selectBoard, increment, decrement } from '../reducers/boardSlice';
 import Button from '@material-ui/core/Button';
 
-const Board = (props) => {
-  const { id } = props;
+const Board = ({ id }) => {
   const dispatch = useDispatch();
   const { boardState } = useSelector(selectBoard);
   const { current } = boardState;
