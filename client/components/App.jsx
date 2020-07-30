@@ -17,7 +17,7 @@ class App extends Component {
       userId: null,
       loggedIn: false,
     };
-    this.update = this.update.bind(this)
+    this.update = this.update.bind(this);
     this.toggleLogin = this.toggleLogin.bind(this);
     this.toggleLogout = this.toggleLogout.bind(this);
     this.registerUser = this.registerUser.bind(this);
@@ -25,7 +25,7 @@ class App extends Component {
   }
 
   update(field) {
-    return e => this.setState({ [field]: e.target.value });
+    return (e) => this.setState({ [field]: e.target.value });
   }
 
   toggleLogout() {
@@ -34,50 +34,50 @@ class App extends Component {
 
   toggleLogin(e) {
     e.preventDefault();
-    const { username, password } = this.state
-    fetch('/server/login', { 
+    const { username, password } = this.state;
+    fetch('/server/user/login', {
       method: 'POST',
-			headers: {
-				"Content-Type": "Application/JSON"
-			},
-			body: JSON.stringify ({ username, password })
+      headers: {
+        'Content-Type': 'Application/JSON',
+      },
+      body: JSON.stringify({ username, password }),
     })
-    .then(resp => resp.json())
+      .then((resp) => resp.json())
       // assign user to state
-    .then(({username, _id}) => {
-      this.setState({
-        loggedIn: true,
-        username,
-        userId: _id,
-        password: null
-      });
-    })
-    .catch((error) => console.log(error));
+      .then(({ username, _id }) => {
+        this.setState({
+          loggedIn: true,
+          username,
+          userId: _id,
+          password: null,
+        });
+      })
+      .catch((error) => console.log(error));
   }
 
   registerUser(e) {
     e.preventDefault();
-    const { username, password, confirm } = this.state
+    const { username, password, confirm } = this.state;
     if (password === confirm) {
-      fetch('/server/signup', { 
+      fetch('/server/user/signup', {
         method: 'POST',
         headers: {
-          "Content-Type": "Application/JSON"
+          'Content-Type': 'Application/JSON',
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
       })
-      .then(resp => resp.json())
-      .then(({ username, _id }) => {
-        if (username) {
-          alert('account created successfully');
-          this.setState({
-            loggedIn: true,
-            username,
-            userId: _id,
-            password: null
-          });
-        } else console.log('unsuccess');
-      });
+        .then((resp) => resp.json())
+        .then(({ username, _id }) => {
+          if (username) {
+            alert('account created successfully');
+            this.setState({
+              loggedIn: true,
+              username,
+              userId: _id,
+              password: null,
+            });
+          } else console.log('unsuccess');
+        });
     } else console.log('passwords not matched');
   }
 
@@ -109,7 +109,7 @@ class App extends Component {
   // }
 
   render() {
-    console.log(this.state)
+    console.log(this.state);
     return (
       <div className="App">
         <Router>
