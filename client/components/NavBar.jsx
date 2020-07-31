@@ -11,9 +11,9 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
-import { useDispatch } from 'react-redux';
-import { getStack , selectStack } from '../reducers/deckSlice';
-// import { getAll } from '../reducers/boardslice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getStack , selectStack, selectDeck } from '../reducers/deckSlice';
+import { getAll } from '../reducers/boardslice';
 
 const useStyles = makeStyles(() => ({
   button: {
@@ -32,20 +32,30 @@ const NavBar = ({ logout }) => {
   
   const { button, button2 , dropMenu} = useStyles();
   const dispatch = useDispatch();
+  const { deckState } = useSelector(selectDeck);
   
-  const handleClick = (e) => {
-    let val = e.target.value
-    dispatch(selectStack(val))
-  }
+ 
   useEffect(() => {
     fetch('/server/stack')
       .then((resp) => resp.json())
       .then((data) => {
+        console.log('hey' , data)
         dispatch(getStack(data));
       })
       .catch(err => console.log(err))
-  })
+  }, [])
 
+  const handleClick = (e) => {
+    let val = e.target.value
+    deckState.stacks
+    console.log(deckState.stacks)
+    // for (let i = 0 ; i< deckState.stacks.length ; i++) {
+    //   if (deckState.stacks[i].hasOwnProperty(val)) {
+    //     useDispatch(getAll(deckState.stacks[i].val))
+    //   }
+  // }
+}
+  // handleClick
   return (
     <div >
       <AppBar position="static" color="#e8eaf6">

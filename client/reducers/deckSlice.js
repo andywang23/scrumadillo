@@ -15,6 +15,8 @@ export const deckSlice = createSlice({
     },
     selectStack: (state, action) => {
       // action paylod is the index given when clicking on drop down option
+      console.log('hii' , action.payload)
+      console.log('bye' ,Object.entries(state.stacks))
       for (let i = 0 ; i< state.stacks.length ; i++) {
         if (state.stacks[i].hasOwnProperty(action.payload)) {
           useDispatch(getAll(state.stacks[i].action.payload))
