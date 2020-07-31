@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getStack , selectStack, selectDeck } from '../reducers/deckSlice';
+import { getStack, selectStack, selectDeck } from '../reducers/deckSlice';
 import { getAll } from '../reducers/boardslice';
 
 const useStyles = makeStyles(() => ({
@@ -25,49 +25,46 @@ const useStyles = makeStyles(() => ({
   dropMenu: {
     marginRight: 'auto',
     minWidth: 120,
-  }
+  },
 }));
 
 const NavBar = ({ logout }) => {
-  
-  const { button, button2 , dropMenu} = useStyles();
+  const { button, button2, dropMenu } = useStyles();
   const dispatch = useDispatch();
-  const { deckState } = useSelector(selectDeck);
-  
- 
+  const deckState = useSelector(selectDeck);
+  console.log('deckState', deckState);
+
   useEffect(() => {
     fetch('/server/stack')
       .then((resp) => resp.json())
       .then((data) => {
-        console.log('hey' , data)
         dispatch(getStack(data));
       })
-      .catch(err => console.log(err))
-  }, [])
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    if (deckState.deck.targetStack)
+      dispatch(getAll(deckState.deck.targetStack));
+  });
 
   const handleClick = (e) => {
-    let val = e.target.value
-    deckState.stacks
-    console.log(deckState.stacks)
-    // for (let i = 0 ; i< deckState.stacks.length ; i++) {
-    //   if (deckState.stacks[i].hasOwnProperty(val)) {
-    //     useDispatch(getAll(deckState.stacks[i].val))
-    //   }
-  // }
-}
-  // handleClick
+    let val = e.target.value;
+    dispatch(selectStack({ deckState, targetStack: val }));
+  };
+
   return (
-    <div >
+    <div>
       <AppBar position="static" color="#e8eaf6">
         <Toolbar>
           <IconButton edge="start">
-            <img src={logo} onClick={logout} className="logo" /> 
+            <img src={logo} onClick={logout} className="logo" />
           </IconButton>
           <FormControl className={dropMenu}>
             <InputLabel>Stacks</InputLabel>
-            <Select value ={3} onChange={handleClick}>
-              <MenuItem value ={'MERN'}>MERN</MenuItem>
-              <MenuItem value ={'NERP'}>NERP</MenuItem>
+            <Select value={3} onChange={handleClick}>
+              <MenuItem value={'MERN'}>MERN</MenuItem>
+              <MenuItem value={'NERP'}>NERP</MenuItem>
             </Select>
           </FormControl>
           {/* <Button className={button2} onClick={handleClick}>
