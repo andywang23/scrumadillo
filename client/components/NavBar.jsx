@@ -38,7 +38,7 @@ const NavBar = ({ logout }) => {
     dispatch(selectStack(val))
   }
   useEffect(() => {
-    fetch('/server/cards')
+    fetch('/server/stack')
       .then((resp) => resp.json())
       .then((data) => {
         dispatch(getStack(data));
@@ -56,9 +56,8 @@ const NavBar = ({ logout }) => {
           <FormControl className={dropMenu}>
             <InputLabel>Stacks</InputLabel>
             <Select value ={3} onChange={handleClick}>
-              <MenuItem value ={0}>MERN</MenuItem>
-              <MenuItem value ={1}>NERP</MenuItem>
-              <MenuItem value ={2}>MEAN</MenuItem>
+              <MenuItem value ={'MERN'}>MERN</MenuItem>
+              <MenuItem value ={'NERP'}>NERP</MenuItem>
             </Select>
           </FormControl>
           {/* <Button className={button2} onClick={handleClick}>
